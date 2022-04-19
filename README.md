@@ -4,6 +4,7 @@
 ```js
 import {withThemex, useThemex, toggleTheme, isDarkMode} from 'mui-themex'
 import {ThemeProvider} from '@mui/material/styles';
+import CssBaseline from "@mui/material/CssBaseline"
 import { Button, Box } from '@mui/material';
 
 
@@ -13,10 +14,11 @@ const Child = () => {
   </Box>
 }
 
-const _App = ({theme}) => {
+const App = ({theme}) => {
   
   return (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Child />
         <Box bgcolor="background.paper">
           <Button onClick={toggleTheme}>Toggle Theme</Button>
@@ -25,7 +27,7 @@ const _App = ({theme}) => {
   );
 };
 
-const App = withThemex(_App, (theme) => ({}))
+export default withThemex(App, 'light', (theme) => ({}))
 
 
 ```

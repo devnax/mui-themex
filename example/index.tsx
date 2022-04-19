@@ -3,6 +3,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {withThemex, useThemex, toggleTheme, isDarkMode} from '../.'
 import {ThemeProvider} from '@mui/material/styles';
+import CssBaseline from "@mui/material/CssBaseline"
 
 import { Button, Box, Typography } from '@mui/material';
 
@@ -18,6 +19,7 @@ const _App = ({theme}) => {
   
   return (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Child />
         <Typography variant="subtitle2">Nice</Typography>
         <Box p={3} mt={2} borderRadius={3} bgcolor="background.paper">
@@ -39,7 +41,7 @@ const _App = ({theme}) => {
   );
 };
 
-const App = withThemex(_App)
+const App = withThemex(_App, 'dark', () => ({palette: {mode: 'dark'}}))
 
 
 

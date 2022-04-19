@@ -27,29 +27,24 @@ export const toggleTheme = () => {
 
 export const useThemex = useTheme
 
-export const withThemex = (Comp: (props: any) => ReactElement, customizeTheme?: (t: ThemeOptions) => ThemeOptions) => {
+export const withThemex = (Comp: (props: any) => ReactElement, defaultMode?: 'light' | 'dark', customizeTheme?: (t: ThemeOptions) => ThemeOptions) => {
    return (props: any) => {
 
       const [observe, setMode] = useState(0)
-      const oTheme = useTheme()
 
       useMemo(() => {
+         let customize: ThemeOptions = {}
+
          if(!options.dispatch){
-            const customize = customizeTheme && customizeTheme(oTheme)
-            options.theme = createTheme(oTheme, {
+            options.mode = defaultMode || 'light'
+            options.theme = createTheme({
                palette: {
                   ...palette,
-                  ...(customize?.palette || {})
-               },
-               typography: {
-                  ...typography(oTheme),
-                  ...(customize?.typography || {})
-               },
-               components: {
-                  ...components(oTheme),
-                  ...(customize?.components || {})
+                  ...(options.mode === 'dark' ? darkPalette : lightPalette)
                }
             })
+
+            customize = customizeTheme ? customizeTheme(options.theme) : {}
             options.dispatch = () => {
                options.mode = options.mode === 'light' ? 'dark' : 'light'
                setMode(Math.random())
@@ -57,10 +52,17 @@ export const withThemex = (Comp: (props: any) => ReactElement, customizeTheme?: 
          }
 
          options.theme = createTheme(options.theme, {
+            ...(customize || {}),
             palette: {
                mode: options.mode,
+               ...customize?.palette,
                ...(options.mode === 'dark' ? darkPalette : lightPalette)
             }
+         })
+
+         options.theme = createTheme(options.theme, {
+            typography: typography(options.theme),
+            components: components(options.theme)
          })
       }, [observe])
 

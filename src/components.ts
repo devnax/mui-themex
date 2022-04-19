@@ -14,6 +14,8 @@ const components = (theme: any) => ({
   MuiCssBaseline: {
     styleOverrides: {
       body: {
+        padding: 0,
+        margin: 0,
         fontFamily: "'Open Sans', sans-serif",
         fontSize: 15,
         height: '100%',
