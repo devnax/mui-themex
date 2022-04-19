@@ -25,7 +25,7 @@ const _App = ({theme}) => {
   );
 };
 
-const App = withThemex(_App)
+const App = withThemex(_App, (theme) => ({}))
 
 
 ```

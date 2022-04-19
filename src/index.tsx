@@ -27,7 +27,7 @@ export const toggleTheme = () => {
 
 export const useThemex = useTheme
 
-export const withThemex = (Comp: (props: any) => ReactElement, customizeTheme?: () => ThemeOptions) => {
+export const withThemex = (Comp: (props: any) => ReactElement, customizeTheme?: (t: ThemeOptions) => ThemeOptions) => {
    return (props: any) => {
 
       const [observe, setMode] = useState(0)
@@ -35,7 +35,7 @@ export const withThemex = (Comp: (props: any) => ReactElement, customizeTheme?: 
 
       useMemo(() => {
          if(!options.dispatch){
-            const customize = customizeTheme && customizeTheme()
+            const customize = customizeTheme && customizeTheme(oTheme)
             options.theme = createTheme(oTheme, {
                palette: {
                   ...palette,
