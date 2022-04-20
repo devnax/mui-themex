@@ -29,5 +29,44 @@ const App = ({theme}) => {
 
 export default withThemex(App, 'light', (theme) => ({}))
 
+```
 
+
+
+
+### WithThemex
+
+```js
+
+withThemex(ComponentType, defaultMode, customize)
+```
+
+##### ComponentType
+```React component```
+
+##### defaultMode
+```
+Callback or 'dark' | 'light'
+
+callback: () => 'dark' | 'light'
+```
+
+##### customize
+```
+Customize the theme.
+
+argument type: callback | object
+
+callback: (oldTheme) => material ui theme object
+object: material ui theme object
+
+```
+
+### AutoSave
+Just add Property in the customize option
+
+```js
+{
+  autoSave: true
+}
 ```

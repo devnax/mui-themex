@@ -1,11 +1,10 @@
 export const darkPalette = {
-   mode: 'dark',
    background: {
       paper: "#202124",
       default: "#292a2d"
    },
    text: {
-      primary: "#FFFFFF",
+      primary: "#aaa",
       secondary: "#e1dfdd"
    }
 }

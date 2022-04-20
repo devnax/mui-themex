@@ -4,14 +4,22 @@ import palette, {darkPalette, lightPalette} from './palette'
 import components from './components'
 import typography from './typography'
 
+export type Mode = 'light' | 'dark'
+export type CompType = (props: any) => ReactElement
+export type DefaultModeType = (() => Mode) | Mode
 
-interface Options {
-   mode: 'light' | 'dark';
+interface ThemeOptionType extends ThemeOptions{
+   autoSave?: boolean
+}
+export type CustomizeThemeType = ((t: ThemeOptions) => ThemeOptionType) | ThemeOptionType
+
+export interface OptionsType {
+   mode: Mode;
    theme: ThemeOptions;
    dispatch: Function | null;
 }
 
-const options: Options = {
+const options: OptionsType = {
    mode: 'light',
    theme: {},
    dispatch: null
@@ -27,16 +35,21 @@ export const toggleTheme = () => {
 
 export const useThemex = useTheme
 
-export const withThemex = (Comp: (props: any) => ReactElement, defaultMode?: 'light' | 'dark', customizeTheme?: (t: ThemeOptions) => ThemeOptions) => {
+export const withThemex = (Comp: CompType, defaultMode?: DefaultModeType, customizeTheme?: CustomizeThemeType) => {
    return (props: any) => {
 
       const [observe, setMode] = useState(0)
 
       useMemo(() => {
-         let customize: ThemeOptions = {}
+         let customize: ThemeOptionType = {}
 
          if(!options.dispatch){
-            options.mode = defaultMode || 'light'
+            if(typeof defaultMode === 'function'){
+               options.mode = defaultMode()
+            }else{
+               options.mode = defaultMode || 'light'
+            }
+
             options.theme = createTheme({
                palette: {
                   ...palette,
@@ -44,17 +57,34 @@ export const withThemex = (Comp: (props: any) => ReactElement, defaultMode?: 'li
                }
             })
 
-            customize = customizeTheme ? customizeTheme(options.theme) : {}
+            if(typeof customizeTheme === 'function'){
+               customize = customizeTheme(options.theme) || {}
+            }else{
+               customize = customizeTheme || {}
+            }
+            
+            if(customize.autoSave){
+               const t: any = localStorage.getItem('themex')
+               if(t === 'light' || t === 'dark'){
+                  options.mode = t
+               }
+            }
+            
             options.dispatch = () => {
                options.mode = options.mode === 'light' ? 'dark' : 'light'
+               if(customize.autoSave){
+                  localStorage.setItem('themex', options.mode)
+               }
                setMode(Math.random())
             }
          }
 
-         options.theme = createTheme(options.theme, {
+         options.theme = createTheme({
+            ...options.theme,
             ...(customize || {}),
             palette: {
                mode: options.mode,
+               ...palette,
                ...customize?.palette,
                ...(options.mode === 'dark' ? darkPalette : lightPalette)
             }
