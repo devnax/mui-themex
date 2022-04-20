@@ -5,7 +5,7 @@ import components from './components'
 import typography from './typography'
 
 export type Mode = 'light' | 'dark'
-export type CompType = (props: any) => ReactElement
+export type CompType = <T>(props: T) => ReactElement
 export type DefaultModeType = (() => Mode) | Mode
 
 interface ThemeOptionType extends ThemeOptions{
