@@ -19,6 +19,12 @@ export interface OptionsType {
    dispatch: Function | null;
 }
 
+const isServer = typeof window === "undefined"
+let lStorage: any = null;
+if(!isServer){
+   lStorage = window.localStorage
+}
+
 const options: OptionsType = {
    mode: 'light',
    theme: {},
@@ -34,6 +40,8 @@ export const toggleTheme = () => {
 }
 
 export const useThemex = useTheme
+
+
 
 export const withThemex = (Comp: CompType, defaultMode?: DefaultModeType, customizeTheme?: CustomizeThemeType) => {
    return (props: any) => {
@@ -64,7 +72,7 @@ export const withThemex = (Comp: CompType, defaultMode?: DefaultModeType, custom
             }
             
             if(customize.autoSave){
-               const t: any = localStorage.getItem('themex')
+               const t: any = lStorage?.getItem('themex')
                if(t === 'light' || t === 'dark'){
                   options.mode = t
                }
@@ -73,7 +81,7 @@ export const withThemex = (Comp: CompType, defaultMode?: DefaultModeType, custom
             options.dispatch = () => {
                options.mode = options.mode === 'light' ? 'dark' : 'light'
                if(customize.autoSave){
-                  localStorage.setItem('themex', options.mode)
+                  lStorage?.setItem('themex', options.mode)
                }
                setMode(Math.random())
             }
