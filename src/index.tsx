@@ -142,11 +142,12 @@ class ThemexRoot extends Component<ThemexRootProps>{
 
 export const withThemex = (Comp: ComponentType<Partial<Props>>, defaultMode?: DefaultModeType, customizeTheme?: CustomizeThemeType) => {
 
-   const C = () => {
+   const C = <P extends {}>(props: P) => {
       return <ThemexRoot 
          Comp={Comp}
          defaultMode={defaultMode}
          customizeTheme={customizeTheme}
+         {...props}
       />
    }
 
