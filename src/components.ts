@@ -20,8 +20,6 @@ const components = (theme: any) => ({
         fontSize: 15,
         height: '100%',
         backgroundColor: theme.palette.background.default,
-        overflow: 'hidden!important',
-
         '& a':{
           textDecoration: "none"
         },
