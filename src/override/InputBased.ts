@@ -9,6 +9,7 @@ const InputBased = (theme: any) => ({
             },  
             '&.MuiFilledInput-root input': {
                 padding: '10px 14px',
+                lineHeight: 0
             },
             "&::before": {
                 borderBottom: "none!important"

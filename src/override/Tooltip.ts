@@ -3,7 +3,7 @@ const Tooltip = (theme: any) => ({
       tooltip: {
          zIndex: 99999,
          fontSize: 13,
-         padding: '6px 12px',
+         padding: '6px 10px',
          boxShadow: theme.shadows[5],
          fontWeight: 600,
          backgroundColor: theme.palette.common.black

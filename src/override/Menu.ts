@@ -6,7 +6,7 @@ const Menu = (theme: any) => ({
                 padding: 4
             },
             '& .MuiMenuItem-root': {
-                borderRadius: 6
+                borderRadius: 5
             }
         }
     }

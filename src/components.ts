@@ -8,7 +8,6 @@ import ListItemIcon from './override/ListItemIcon'
 import Menu from './override/Menu'
 import FormHelperText from './override/FormHelperText'
 import Tooltip from './override/Tooltip'
-import DataGrid from './override/DataGrid'
 
 const components = (theme: any) => ({
   MuiCssBaseline: {
@@ -16,14 +15,13 @@ const components = (theme: any) => ({
       body: {
         padding: 0,
         margin: 0,
-        fontFamily: "'Open Sans', sans-serif",
+        fontFamily: "'Inter', sans-serif",
         fontSize: 15,
         height: '100%',
         backgroundColor: theme.palette.background.default,
         '& a':{
           textDecoration: "none"
         },
-
         '& input:-webkit-autofill, & select:-webkit-autofill' : {
           WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset!important`,
         }
@@ -41,9 +39,6 @@ const components = (theme: any) => ({
   MuiChip: Chip(theme),
   MuiMenu: Menu(theme),
   MuiTooltip: Tooltip(theme),
-  MuiDataGrid: DataGrid(theme),
-
-
 })
 
 export default components
